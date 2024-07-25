@@ -14,3 +14,10 @@ const { user } = storeToRefs(authStore);
         <p><router-link to="/users">Manage Users</router-link></p>
     </div>
 </template>
+
+<style scoped>
+body {
+    height: 100vh;
+    background: #fff;
+}
+</style>

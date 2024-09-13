@@ -6,14 +6,18 @@ import { useAuthStore } from '@/stores';
 const baseUrl = `${import.meta.env.VITE_API_URL}/users`;
 
 export const useUsersStore = defineStore({
-    id: 'users',
+    id: 'user',
     state: () => ({
-        users: {},
-        user: {}
+        // users: {},
+        // user: {}
+        firstName:{},
+        lastName:{},
+        username:{},
+        password:{},
     }),
     actions: {
-        async register(user) {
-            await fetchWrapper.post(`${baseUrl}/register`, user);
+        async register(firstName, lastName, username, password) {
+            await fetchWrapper.post(`${baseUrl}/register`, {firstName, lastName, username, password});
         },
         async getAll() {
             this.users = { loading: true };

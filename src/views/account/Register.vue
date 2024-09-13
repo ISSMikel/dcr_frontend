@@ -21,7 +21,8 @@ async function onSubmit(values) {
     const usersStore = useUsersStore();
     const alertStore = useAlertStore();
     try {
-        await usersStore.register(values);
+        const {firstName, lastName, username, password}= values;
+        await usersStore.register(firstName, lastName, username, password);
         await router.push('/account/login');
         alertStore.success('Registration successful');
     } catch (error) { 

@@ -3,13 +3,13 @@ import { defineStore } from 'pinia';
 import { fetchWrapper } from '@/helpers';
 import { useAuthStore } from '@/stores';
 
-const baseUrl = `${import.meta.env.VITE_API_URL}`;
+const baseUrl = `${import.meta.env.VITE_API_URL}/api/users`;
 
 export const useUsersStore = defineStore({
     id: 'user',
     state: () => ({
-        // users: {},
-        // user: {}
+        users: {},
+        user: {},
         name:{},
         email:{},
         password:{},

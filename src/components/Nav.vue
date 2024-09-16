@@ -18,7 +18,7 @@ const { user } = storeToRefs(authStore);
             <router-link to="/users" class="text-lg nav-item nav-link text-white hover:text-white self-center hover:bg-green-400 rounded ml-36 mr-40">Users</router-link>   
             <h1 class="text-2xl text-white font-bold mt-2 w-100">Digital Correspondence Register</h1>
             <h1 class="text-lg nav-item nav-link text-white hover:text-white w-50">Logged In: {{
-                        authStore.user?.username }}</h1>
+                        authStore.user?.name }}</h1>
                
                    <button @click="authStore.logout()" class="flex-row-reverse bg-red-500 hover:bg-red-400 text-white font-bold py-2 px-4 border border-gred-700 rounded">Logout</button>            
             </div>

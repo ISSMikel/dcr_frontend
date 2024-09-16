@@ -5,14 +5,14 @@ import * as Yup from 'yup';
 import { useAuthStore } from '@/stores';
 
 const schema = Yup.object().shape({
-    username: Yup.string().required('Username is required'),
+    email: Yup.string().required('email is required'),
     password: Yup.string().required('Password is required')
 });
 
 async function onSubmit(values) {
     const authStore = useAuthStore();
-    const { username, password } = values;
-    await authStore.login(username, password);
+    const { email, password } = values;
+    await authStore.login(email, password);
 }
 </script>
 
@@ -41,9 +41,9 @@ async function onSubmit(values) {
                             <path
                                 d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" />
                         </svg>
-                        <Field name="username" type="text" class="grow" placeholder="Firstname.Lastname"
-                            :class="{ 'is-invalid': errors.username }" />
-                        <div class="invalid-feedback">{{ errors.username }}</div>
+                        <Field name="email" type="text" class="grow" placeholder="Email"
+                            :class="{ 'is-invalid': errors.email }" />
+                        <div class="invalid-feedback">{{ errors.email }}</div>
                     </label>
 
                 </div>

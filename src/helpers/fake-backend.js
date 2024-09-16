@@ -13,8 +13,8 @@ function fakeBackend() {
 
             function handleRoute() {
                 switch (true) {
-                    case url.endsWith('/users/authenticate') && opts.method === 'POST':
-                        return authenticate();
+                    case url.endsWith('/users/login') && opts.method === 'POST':
+                        return login();
                     case url.endsWith('/users/register') && opts.method === 'POST':
                         return register();
                     case url.endsWith('/users') && opts.method === 'GET':
@@ -35,11 +35,11 @@ function fakeBackend() {
 
             // route functions
 
-            function authenticate() {
-                const { username, password } = body();
-                const user = users.find(x => x.username === username && x.password === password);
+            function login() {
+                const { email, password } = body();
+                const user = users.find(x => x.email === email && x.password === password);
 
-                if (!user) return error('Username or password is incorrect');
+                if (!user) return error('Email or password is incorrect');
 
                 return ok({
                     ...basicDetails(user),
@@ -50,8 +50,8 @@ function fakeBackend() {
             function register() {
                 const user = body();
 
-                if (users.find(x => x.username === user.username)) {
-                    return error('Username "' + user.username + '" is already taken')
+                if (users.find(x => x.email === user.email)) {
+                    return error('Email "' + user.email + '" is already taken')
                 }
 
                 user.id = users.length ? Math.max(...users.map(x => x.id)) + 1 : 1;
@@ -84,8 +84,8 @@ function fakeBackend() {
                 }
 
                 // if username changed check if taken
-                if (params.username !== user.username && users.find(x => x.username === params.username)) {
-                    return error('Username "' + params.username + '" is already taken')
+                if (params.email !== user.email && users.find(x => x.email === params.email)) {
+                    return error('Email "' + params.email + '" is already taken')
                 }
 
                 // update and save user
@@ -118,8 +118,10 @@ function fakeBackend() {
             }
 
             function basicDetails(user) {
-                const { id, username, firstName, lastName } = user;
-                return { id, username, firstName, lastName };
+                // const { id, username, firstName, lastName } = user;
+                // return { id, username, firstName, lastName };
+                const { id, name, email } = user;
+                return { id, name, email};
             }
 
             function isAuthenticated() {

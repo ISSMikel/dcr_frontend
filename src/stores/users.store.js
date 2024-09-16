@@ -11,13 +11,13 @@ export const useUsersStore = defineStore({
         // users: {},
         // user: {}
         name:{},
-        username:{},
+        email:{},
         password:{},
         password_confirmation:{},
     }),
     actions: {
-        async register(name, username, password, password_confirmation) {
-            await fetchWrapper.post(`${baseUrl}/register`, { name, username, password, password_confirmation});
+        async register(name, email, password, password_confirmation) {
+            await fetchWrapper.post(`${baseUrl}/register`, { name, email, password, password_confirmation});
         },
         async getAll() {
             this.users = { loading: true };

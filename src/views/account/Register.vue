@@ -22,8 +22,8 @@ async function onSubmit(values) {
     const usersStore = useUsersStore();
     const alertStore = useAlertStore();
     try {
-        const {name, username, password, password_confirmation}= values;
-        await usersStore.register(name, username, password, password_confirmation);
+        const {name, email, password, password_confirmation}= values;
+        await usersStore.register(name, email, password, password_confirmation);
         await router.push('/account/login');
         alertStore.success('Registration successful');
     } catch (error) { 
@@ -48,9 +48,9 @@ async function onSubmit(values) {
                     <div class="invalid-feedback">{{ errors.name }}</div>
                 </div>
                 <div class="form-group">
-                    <label>Username</label>
-                    <Field name="username" type="text" class="form-control" :class="{ 'is-invalid': errors.username }" />
-                    <div class="invalid-feedback">{{ errors.username }}</div>
+                    <label>Email</label>
+                    <Field name="email" type="email" class="form-control" :class="{ 'is-invalid': errors.email }" />
+                    <div class="invalid-feedback">{{ errors.email }}</div>
                 </div>
                 <div class="form-group">
                     <label>Password</label>

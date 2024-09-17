@@ -1,10 +1,13 @@
 import { defineStore } from 'pinia';
-
-import { fetchWrapper } from '@/helpers';
+import axios from "axios";
+// import { fetchWrapper } from '@/helpers';
 import { router } from '@/router';
 import { useAlertStore } from '@/stores';
 
-const baseUrl = `${import.meta.env.VITE_API_URL}/api/users`;
+axios.defaults.withCredentials = true;
+axios.defaults.withXSRFToken = true;
+
+const baseUrl = `${import.meta.env.VITE_API_URL}`;
 
 export const useAuthStore = defineStore({
     id: 'auth',
@@ -16,7 +19,13 @@ export const useAuthStore = defineStore({
     actions: {
         async login(email, password, datasource) {
             try {
-                const user = await fetchWrapper.post(`${baseUrl}/login`, { email, password, datasource });    
+                // Get CSRF Cookie
+                await axios.get(`${baseUrl}/sanctum/csrf-cookie`);
+
+                // Login...
+                const user = await axios.post(`${baseUrl}/login`, {
+                    email, password, datasource,
+                });
 
                 // update pinia state
                 this.user = user;
@@ -28,7 +37,7 @@ export const useAuthStore = defineStore({
                 router.push(this.returnUrl || '/');
             } catch (error) {
                 const alertStore = useAlertStore();
-                alertStore.error(error);                
+                alertStore.error(error);
             }
         },
         logout() {

@@ -268,17 +268,17 @@ export default {
             ],
 
             items: [
-                {
-                    dateReceived: "25/07/2024", correspondenceDate: "25/07/2024", receivedFrom: "Ms. Vanessa Richards",
-                    subject: 'National Health Services Accreditation Authority of T&T', fileNumber: "National Health Services Accreditation Authority of T&T",
-                    comments: "directed by PM to Ms. Richards for action on July 12, 2024", nav: ''
-                },
+                // {
+                //     dateReceived: "25/07/2024", correspondenceDate: "25/07/2024", receivedFrom: "Ms. Vanessa Richards",
+                //     subject: 'National Health Services Accreditation Authority of T&T', fileNumber: "National Health Services Accreditation Authority of T&T",
+                //     comments: "directed by PM to Ms. Richards for action on July 12, 2024", nav: ''
+                // },
 
-                {
-                    dateReceived: "25/07/2024", correspondenceDate: "04/07/2024", receivedFrom: "Sec. to Cabinet",
-                    subject: 'Ms. Lisa Lashley, and Ms. Andrea Walcott ftp Aug. 3, 2023 to Aug. 2, 2024', fileNumber: "Forwarding Form",
-                    comments: "", nav: ''
-                },
+                // {
+                //     dateReceived: "25/07/2024", correspondenceDate: "04/07/2024", receivedFrom: "Sec. to Cabinet",
+                //     subject: 'Ms. Lisa Lashley, and Ms. Andrea Walcott ftp Aug. 3, 2023 to Aug. 2, 2024', fileNumber: "Forwarding Form",
+                //     comments: "", nav: ''
+                // },
             ],
 
         }

@@ -8,8 +8,8 @@ import 'vue3-easy-data-table/dist/style.css';
 
 
 // setup fake backend
-// import { fakeBackend } from './helpers';
-// fakeBackend();
+import { fakeBackend } from './helpers';
+fakeBackend();
 
 const app = createApp(App);
 app.component('EasyDataTable', Vue3EasyDataTable);

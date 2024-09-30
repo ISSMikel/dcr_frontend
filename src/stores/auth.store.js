@@ -20,7 +20,7 @@ export const useAuthStore = defineStore({
         async login(email, password, datasource) {
             try {
                 // Get CSRF Cookie
-                await axios.get(`${baseUrl}/sanctum/csrf-cookie`);
+                await axios.get(`https://dcr_api.test/sanctum/csrf-cookie`);
 
                 // Login...
                 const user = await axios.post(`${baseUrl}/login`, {
@@ -28,10 +28,11 @@ export const useAuthStore = defineStore({
                 });
 
                 // update pinia state
-                this.user = user;
+                this.user = user.data;
+                // console.log(user.data.token);
 
                 // store user details and jwt in local storage to keep user logged in between page refreshes
-                localStorage.setItem('user', JSON.stringify(user));
+                localStorage.setItem('user', JSON.stringify(user.data));
 
                 // redirect to previous url or default to home page
                 router.push(this.returnUrl || '/');

@@ -5,7 +5,7 @@
         <button class="btn bg-green-400 " onclick="my_modal_1.showModal()">Add Correspondence</button>
         <dialog id="my_modal_1" class="modal">
             <div class="mb-96">
-                <form @click="handleInfoSubmit()">
+                <form @click="createCorrespondenceInfo()">
                     <div class="flex justify-center py-5">
                         <div class="p-5 rounded-xl bg-white max-w-2xl flex-1 text-center border shadow-2xl">
                             <div class="grid grid-cols-3 place-items-center ">
@@ -85,7 +85,7 @@
                                 <button
                                     class="bg-red-500 hover:bg-red-600 transition-all duration-200  text-white rounded-lg p-2">Close</button>
 
-                                <button @click="handleInfoSubmit()" type="submit"
+                                <button @click="createCorrespondenceInfo()" type="submit"
                                     class="bg-blue-500 hover:bg-blue-600 transition-all duration-200  text-white rounded-lg p-2">
                                     Submit
                                 </button>
@@ -104,7 +104,8 @@
                 checked="checked" />
             <div role="tabpanel" class="tab-content bg-base-100 border-base-300 rounded-box p-6">
 
-                <EasyDataTable :headers="CorrespondenceHeaders" :items="CorrespondenceInfoData">
+                <EasyDataTable :headers="CorrespondenceHeaders" :items="correspondenceInfo" />
+
                     <template #item-navUrl="{}">
                         <!-- Edit Modal -->
                         <div class="flex flex-row-reverse pr-10">
@@ -262,9 +263,9 @@ export default {
     methods: {
 
         // Get Correspondence Info
-        async getCorrepondenceInfo() {
+        async getCorrespondenceInfo() {
             const { user } = useAuthStore();
-
+            // console.log(user);
             const config = {
                 headers: {
                     Authorization: `Bearer ${user.token}`,
@@ -273,12 +274,12 @@ export default {
 
             try {
                 const response = await axios.get(
-                    `${import.meta.env.VITE_API_URL}/api/correspondence/`, config
+                    `${import.meta.env.VITE_API_URL}/correspondence`, config
                 );
+                // console.log(response);
+                this.correspondenceInfo = response.data.data
 
-                this.correspondenceInfo = response.data
-
-                console.log(response.data)
+                // console.log(this.correspondenceInfo)
 
             } catch (e) {
 
@@ -289,7 +290,7 @@ export default {
 
 
         // Create Correspondence Info
-        async createCorrepondenceInfo() {
+        async createCorrespondenceInfo() {
             const { user } = useAuthStore();
 
             const config = {
@@ -300,7 +301,7 @@ export default {
 
             try {
                 const response = await axios.post(
-                    `${import.meta.env.VITE_API_URL}/api/correspondence/`, config
+                    `${import.meta.env.VITE_API_URL}/correspondence`, config
                 );
 
                 console.log(response)
@@ -312,7 +313,7 @@ export default {
         }
     },
     // Update Correspondence Info
-    async updateCorrepondenceInfo() {
+    async updateCorrespondenceInfo() {
         const { user } = useAuthStore();
 
         const config = {
@@ -323,10 +324,10 @@ export default {
 
         try {
             const response = await axios.put(
-                `${import.meta.env.VITE_API_URL}/api/correspondence/`, config
+                `${import.meta.env.VITE_API_URL}/correspondence`, config
             );
 
-            console.log(response)
+            // console.log(response)
 
         } catch (e) {
 
@@ -335,7 +336,7 @@ export default {
     },
 
     //Delete Get Correspondence Info
-    async createCorrepondenceInfo() {
+    async deleteCorrespondenceInfo() {
         const { user } = useAuthStore();
 
         const config = {
@@ -346,10 +347,10 @@ export default {
 
         try {
             const response = await axios.delete(
-                `${import.meta.env.VITE_API_URL}/api/correspondence/`, config
+                `${import.meta.env.VITE_API_URL}/correspondence`, config
             );
 
-            console.log(response)
+            // console.log(response)
 
         } catch (e) {
 
@@ -357,7 +358,7 @@ export default {
         }
     },
     created() {
-        // this.correspondenceInfo()
+        this.getCorrespondenceInfo()
     },
 
     data() {
@@ -385,6 +386,9 @@ export default {
                     comments: ""
                 },
             ],
+
+            correspondenceInfo: [],
+
 
 
             headers: [

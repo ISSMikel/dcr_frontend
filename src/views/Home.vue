@@ -104,7 +104,7 @@
                 checked="checked" />
             <div role="tabpanel" class="tab-content bg-base-100 border-base-300 rounded-box p-6">
 
-                <EasyDataTable :headers="CorrespondenceHeaders" :items="correspondenceInfo" />
+                <EasyDataTable :headers="CorrespondenceHeaders" :items="correspondenceInfo">
 
                     <template #item-navUrl="{}">
                         <!-- Edit Modal -->

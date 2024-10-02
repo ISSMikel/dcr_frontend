@@ -5,7 +5,7 @@
         <button class="btn bg-green-400 " onclick="my_modal_1.showModal()">Add Correspondence</button>
         <dialog id="my_modal_1" class="modal">
             <div class="mb-96">
-                <form @click="createCorrespondenceInfo()">
+                <form @click.prevent="createCorrespondenceInfo()" method="post">
                     <div class="flex justify-center py-5">
                         <div class="p-5 rounded-xl bg-white max-w-2xl flex-1 text-center border shadow-2xl">
                             <div class="grid grid-cols-3 place-items-center ">
@@ -85,7 +85,7 @@
                                 <button
                                     class="bg-red-500 hover:bg-red-600 transition-all duration-200  text-white rounded-lg p-2">Close</button>
 
-                                <button @click="createCorrespondenceInfo()" type="submit"
+                                <button type="submit"
                                     class="bg-blue-500 hover:bg-blue-600 transition-all duration-200  text-white rounded-lg p-2">
                                     Submit
                                 </button>
@@ -253,6 +253,8 @@ import _ from "lodash";
 import { toast } from "vue3-toastify";
 import "vue3-toastify/dist/index.css";
 
+axios.defaults.withCredentials = true;
+axios.defaults.withXSRFToken = true;
 
 // const authStore = useAuthStore();
 // const { user } = storeToRefs(authStore);
@@ -292,7 +294,7 @@ export default {
         // Create Correspondence Info
         async createCorrespondenceInfo() {
             const { user } = useAuthStore();
-
+            // console.log(user.token);
             const config = {
                 headers: {
                     Authorization: `Bearer ${user.token}`,

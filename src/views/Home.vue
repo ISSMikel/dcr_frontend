@@ -110,7 +110,8 @@
                         <!-- Edit Modal -->
                         <div class="flex flex-row-reverse pr-10">
                             <!-- Open the modal using ID.showModal() method -->
-                            <button class="btn bg-green-400" onclick="my_modal_2.showModal()">Edit</button>
+                            <!-- <button class="btn bg-green-400" onclick="my_modal_2.showModal()">Edit</button> -->
+                            <button class="btn bg-green-400" @click="deleteCorrespondenceInfo()">Edit</button>
                             <dialog id="my_modal_2" class="modal">
                                 <div class="mb-96">
                                     <form @click="handleInfoSubmit()">
@@ -349,10 +350,10 @@ export default {
 
         try {
             const response = await axios.delete(
-                `${import.meta.env.VITE_API_URL}/correspondence`, config
+                `${import.meta.env.VITE_API_URL}/correspondence/1`, config
             );
 
-            // console.log(response)
+            console.log(response)
 
         } catch (e) {
 

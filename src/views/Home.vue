@@ -17,28 +17,28 @@
                                 </div>
                                 <div class="col-span-2">
                                     <input type="text" class="border border-black p-2 rounded-lg mb-4 w-96 "
-                                        aria-describedby="emailHelp" name="fileNumber">
+                                        aria-describedby="emailHelp" name="fileNumber" v-model="correspondenceForm.fileNumber">
                                 </div>
                                 <div class="font-bold text-lg">
                                     <label for="subject">Subject</label>
                                 </div>
                                 <div class="col-span-2">
                                     <input type="text" class="border border-black p-2 rounded-lg mb-4 w-96"
-                                        aria-describedby="emailHelp" name="subject">
+                                        aria-describedby="emailHelp" name="subject" v-model="correspondenceForm.subject">
                                 </div>
                                 <div class="font-bold text-lg">
                                     <label for="subject">From Whom Received</label>
                                 </div>
                                 <div class="col-span-2">
                                     <input type="text" class="border border-black p-2 rounded-lg mb-4 w-96"
-                                        aria-describedby="emailHelp" name="fromWhomReceived">
+                                        aria-describedby="emailHelp" name="fromWhomReceived" v-model="correspondenceForm.receivedFrom">
                                 </div>
                                 <div class="font-bold text-lg">
                                     <label for="areaOfFiling">Area of Filing</label>
                                 </div>
                                 <div class="col-span-2">
                                     <select class="w-96 border border-black p-2 rounded-lg mb-4"
-                                        aria-label="Default select example" name="areaOfFiling">
+                                        aria-label="Default select example" name="areaOfFiling" v-model="correspondenceForm.filingArea">
                                         <option value="letters">Letters</option>
                                         <option value="invitation">Invitation</option>
                                         <option value="temp_file">Temp File</option>
@@ -64,21 +64,21 @@
                                 </div>
                                 <div class="col-span-2">
                                     <input type="date" class="border border-black p-2 rounded-lg mb-4 "
-                                        aria-describedby="emailHelp" name="dateOfLetters">
+                                        aria-describedby="emailHelp" name="dateOfLetters" v-model="correspondenceForm.correspondenceDate">
                                 </div>
                                 <div class="font-bold text-lg">
                                     <label for="dateOfReceipt">Date of Receipt</label>
                                 </div>
                                 <div class="col-span-2">
                                     <input type="date" class="border border-black p-2 rounded-lg mb-4 "
-                                        aria-describedby="emailHelp" name="dateOfReceipt">
+                                        aria-describedby="emailHelp" name="dateOfReceipt" v-model="correspondenceForm.dateReceived">
                                 </div>
                                 <div class="font-bold text-lg">
                                     <label for="remarksComments">Remarks/Comments</label>
                                 </div>
                                 <div class="col-span-2">
                                     <textarea type="text" class="border border-black p-2 rounded-lg mb-4 w-96 h-20"
-                                        aria-describedby="emailHelp" name="remarksComments" />
+                                        aria-describedby="emailHelp" name="remarksComments" v-model="correspondenceForm.comments"/>
                                 </div>
                             </div>
                             <div class="flex justify-around">
@@ -105,7 +105,6 @@
             <div role="tabpanel" class="tab-content bg-base-100 border-base-300 rounded-box p-6">
 
                 <EasyDataTable :headers="CorrespondenceHeaders" :items="correspondenceInfo">
-
                     <template #item-navUrl="{}">
                         <!-- Edit Modal -->
                         <div class="flex flex-row-reverse pr-10">
@@ -294,6 +293,9 @@ export default {
 
         // Create Correspondence Info
         async createCorrespondenceInfo() {
+
+            console.log(this.correspondenceForm)
+
             const { user } = useAuthStore();
             // console.log(user.token);
             const config = {
@@ -304,7 +306,9 @@ export default {
 
             try {
                 const response = await axios.post(
-                    `${import.meta.env.VITE_API_URL}/correspondence`, config
+                    `${import.meta.env.VITE_API_URL}/correspondence`, 
+                    this.correspondenceForm,
+                    config
                 );
 
                 console.log(response)
@@ -370,6 +374,7 @@ export default {
             CorrespondenceHeaders: [
                 { text: "DATE OF RECEIPT", value: "dateReceived" },
                 { text: "DATE OF LETTERS", value: "correspondenceDate" },
+                { text: "FILING AREA", value: "filingArea" },
                 { text: "FROM WHOM RECEIVED", value: "receivedFrom" },
                 { text: "SUBJECT", value: "subject" },
                 { text: "FILE NUMBER", value: "fileNumber" },
@@ -391,6 +396,19 @@ export default {
             ],
 
             correspondenceInfo: [],
+
+            correspondenceForm:{
+                 fileNumber:"",
+                 subject:"",
+                 receivedFrom:"",
+                 filing_area_id:"1",
+                 filingArea:"",
+                 correspondenceDate:"",
+                 dateReceived:"",
+                 comments:"",
+                
+
+            },
 
 
 

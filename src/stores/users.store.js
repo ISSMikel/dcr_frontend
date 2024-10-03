@@ -20,7 +20,7 @@ export const useUsersStore = defineStore({
     actions: {
         async register(name, email, password, password_confirmation) {
             // Get CSRF Cookie
-            await axios.get(`https://dcr_api.test/sanctum/csrf-cookie`);
+            await axios.get(`http://127.0.0.1:8000/sanctum/csrf-cookie`);
 
             await axios.post(`${baseUrl}/register`, { name, email, password, password_confirmation });
         },

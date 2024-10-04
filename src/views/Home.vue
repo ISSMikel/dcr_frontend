@@ -408,7 +408,6 @@ export default {
                     Authorization: `Bearer ${user.token}`,
                 },
             };
-
             try {
                 const response = await axios.delete(
                     `${import.meta.env.VITE_API_URL}/correspondence/${id}`,
@@ -418,7 +417,6 @@ export default {
                 // console.log(response)
 
             } catch (e) {
-
                 console.log(e)
             }
         },

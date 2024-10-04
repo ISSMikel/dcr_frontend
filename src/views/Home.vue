@@ -4,96 +4,231 @@
         <!-- Open the modal using ID.showModal() method -->
         <button class="btn bg-green-400 " onclick="my_modal_1.showModal()">Add Correspondence</button>
         <dialog id="my_modal_1" class="modal">
-            <div class="mb-96">
-                <form @click.prevent="createCorrespondenceInfo()" method="post">
-                    <div class="flex justify-center py-5">
-                        <div class="p-5 rounded-xl bg-white max-w-2xl flex-1 text-center border shadow-2xl">
-                            <div class="grid grid-cols-3 place-items-center ">
-                                <div class=" col-span-3">
-                                    <h1 class=" mb-10 text-2xl font-bold">DCR Info Form</h1>
-                                </div>
-                                <div class="font-bold text-lg ">
-                                    <label class="text-left" for="fileNumber">File Number</label>
-                                </div>
-                                <div class="col-span-2">
-                                    <input type="text" class="border border-black p-2 rounded-lg mb-4 w-96 "
-                                        aria-describedby="emailHelp" name="fileNumber" v-model="correspondenceForm.fileNumber">
-                                </div>
-                                <div class="font-bold text-lg">
-                                    <label for="subject">Subject</label>
-                                </div>
-                                <div class="col-span-2">
-                                    <input type="text" class="border border-black p-2 rounded-lg mb-4 w-96"
-                                        aria-describedby="emailHelp" name="subject" v-model="correspondenceForm.subject">
-                                </div>
-                                <div class="font-bold text-lg">
-                                    <label for="subject">From Whom Received</label>
-                                </div>
-                                <div class="col-span-2">
-                                    <input type="text" class="border border-black p-2 rounded-lg mb-4 w-96"
-                                        aria-describedby="emailHelp" name="fromWhomReceived" v-model="correspondenceForm.receivedFrom">
-                                </div>
-                                <div class="font-bold text-lg">
-                                    <label for="areaOfFiling">Area of Filing</label>
-                                </div>
-                                <div class="col-span-2">
-                                    <select class="w-96 border border-black p-2 rounded-lg mb-4"
-                                        aria-label="Default select example" name="areaOfFiling" v-model="correspondenceForm.filingArea">
-                                        <option value="letters">Letters</option>
-                                        <option value="invitation">Invitation</option>
-                                        <option value="temp_file">Temp File</option>
-                                        <option value="file">File</option>
-                                        <option value="cabinet_file">Cabinet File</option>
-                                        <option value="note_for_cabinet">Note for Cabinet</option>
-                                        <option value="draft_note_for_cabinet">DRAFT Note for Cabinet</option>
-                                        <option value="ministerial_minutes">Ministerial Minutes</option>
-                                        <option value="performance_appraisals">Performance Appraisals (PAR)</option>
-                                        <option value="Prime_ministers_mails">Prime ministers' mails</option>
-                                        <option value="registry_mails">Registry Mails</option>
-                                        <option value="contractual_agreement">Contractual Agreement</option>
-                                        <option value="memo">Memo</option>
-                                        <option value="private_confidential">Private/Confidential</option>
-                                        <option value="national_security_council_secretariat">National Security Council
-                                            Secretariat (NSCS) </option>
-                                        <option value="form">Form</option>
-                                        <option value="miscellaneous">Miscellaneous</option>
-                                    </select>
-                                </div>
-                                <div class="font-bold text-lg">
-                                    <label for="dateOfLetters"> Date of Letter</label>
-                                </div>
-                                <div class="col-span-2">
-                                    <input type="date" class="border border-black p-2 rounded-lg mb-4 "
-                                        aria-describedby="emailHelp" name="dateOfLetters" v-model="correspondenceForm.correspondenceDate">
-                                </div>
-                                <div class="font-bold text-lg">
-                                    <label for="dateOfReceipt">Date of Receipt</label>
-                                </div>
-                                <div class="col-span-2">
-                                    <input type="date" class="border border-black p-2 rounded-lg mb-4 "
-                                        aria-describedby="emailHelp" name="dateOfReceipt" v-model="correspondenceForm.dateReceived">
-                                </div>
-                                <div class="font-bold text-lg">
-                                    <label for="remarksComments">Remarks/Comments</label>
-                                </div>
-                                <div class="col-span-2">
-                                    <textarea type="text" class="border border-black p-2 rounded-lg mb-4 w-96 h-20"
-                                        aria-describedby="emailHelp" name="remarksComments" v-model="correspondenceForm.comments"/>
-                                </div>
+            <div class="modal-action">
+                <form>
+                    <div class="rounded-xl bg-white text-center border shadow-2xl">
+                        <div class="p-2">
+                            <div class="">
+                                <h1 class="mb-10 text-2xl font-bold">DCR Info Form</h1>
                             </div>
-                            <div class="flex justify-around">
-                                <button
-                                    class="bg-red-500 hover:bg-red-600 transition-all duration-200  text-white rounded-lg p-2">Close</button>
 
-                                <button type="submit"
-                                    class="bg-blue-500 hover:bg-blue-600 transition-all duration-200  text-white rounded-lg p-2">
-                                    Submit
-                                </button>
+                            <div class="flex text-lg ">
+                                <div class="font-bold">
+                                    <label class="ml-16 w-40 text-left mt-2" for="fileNumber">File Number</label>
+                                </div>
+                                <input type="text" class="border border-black p-2 rounded-lg mb-4 w-72 "
+                                    aria-describedby="emailHelp" name="fileNumber"
+                                    v-model="correspondenceForm.fileNumber">
                             </div>
+
+                            <div class="flex text-lg ">
+                                <div class="font-bold">
+                                    <label class="ml-16 w-40 text-left mt-2" for="subject">Subject</label>
+                                </div>
+                                <input type="text" class="border border-black p-2 rounded-lg mb-4 w-72"
+                                    aria-describedby="emailHelp" name="subject" v-model="correspondenceForm.subject">
+                            </div>
+
+                            <div class="flex text-lg ">
+                                <div class="font-bold">
+                                    <label class="ml-2 pr-8 text-left mt-2" for="receivedFrom">From Whom
+                                        Received</label>
+                                </div>
+                                <input type="text" class="border border-black p-2 rounded-lg mb-4 w-72"
+                                    aria-describedby="emailHelp" name="receivedFrom"
+                                    v-model="correspondenceForm.receivedFrom">
+                            </div>
+
+                            <div class="flex text-lg ">
+                                <div class="font-bold">
+                                    <label class="ml-10 w-40  " for="areaOfFiling">Area of Filing</label>
+                                </div>
+                                <select class="border border-black p-2 rounded-lg mb-4 ml-4 w-72"
+                                    aria-label="Default select example" name="areaOfFiling"
+                                    v-model="correspondenceForm.filing_area_id">
+                                    <option value="1">Letters</option>
+                                    <option value="2">Invitation</option>
+                                    <option value="3">Temp File</option>
+                                    <option value="4">File</option>
+                                    <option value="5">Cabinet File</option>
+                                    <option value="6">Note for Cabinet</option>
+                                    <option value="7">DRAFT Note for Cabinet</option>
+                                    <option value="8">Ministerial Minutes</option>
+                                    <option value="9">Performance Appraisals (PAR)</option>
+                                    <option value="10">Prime ministers' mails</option>
+                                    <option value="11">Registry Mails</option>
+                                    <option value="12">Contractual Agreement</option>
+                                    <option value="13">Memo</option>
+                                    <option value="14">Private/Confidential</option>
+                                    <option value="15">National Security Council
+                                        Secretariat (NSCS) </option>
+                                    <option value="16">Form</option>
+                                    <option value="17">Miscellaneous</option>
+                                </select>
+
+                            </div>
+
+                            <div class="flex text-lg ">
+                                <div class="font-bold">
+                                    <label class="ml-16 w-40 text-left mt-2" for="correspondenceDate">Date of
+                                        Letter</label>
+                                </div>
+                                <input type="date" class="border border-black p-2 rounded-lg mb-4 w-72"
+                                    aria-describedby="emailHelp" name="correspondenceDate"
+                                    v-model="correspondenceForm.correspondenceDate">
+                            </div>
+
+                            <div class="flex text-lg ">
+                                <div class="font-bold">
+                                    <label class="ml-16 w-40 text-left mt-2" for="dateReceived">Date of Receipt</label>
+                                </div>
+                                <input type="date" class="border border-black p-2 rounded-lg mb-4 w-72"
+                                    aria-describedby="emailHelp" name="dateReceived"
+                                    v-model="correspondenceForm.dateReceived">
+                            </div>
+
+                            <div class="flex  text-lg ">
+                                <div class="font-bold">
+                                    <label class="ml-2 pr-12 w-42 text-left mt-2"
+                                        for="comments">Remarks/Comments</label>
+                                </div>
+                                <textarea type="text" class="border border-black p-2 rounded-lg mb-4 w-72"
+                                    aria-describedby="emailHelp" name="comments"
+                                    v-model="correspondenceForm.comments" />
+                            </div>
+                        </div>
+                        <div class="flex justify-around pb-2">
+
+                            <button type="button"
+                                class=" btn bg-red-500 hover:bg-red-600 transition-all duration-200  text-white rounded-lg p-2"
+                                onclick="my_modal_1.close()">Close</button>
+
+                            <button type="button"
+                                class="btn bg-blue-500 hover:bg-blue-600 transition-all duration-200  text-white rounded-lg p-2"
+                                @click="createCorrespondenceInfo()">
+                                Submit
+                            </button>
+
                         </div>
                     </div>
                 </form>
+            </div>
+        </dialog>
+    </div>
 
+    <!-- Edit Modal -->
+    <div class="flex flex-row-reverse pr-10">
+        <!-- Open the modal using ID.showModal() method -->
+
+        <dialog id="my_modal_2" class="modal">
+            <div class="modal-action">
+                <form>
+                    <div class="rounded-xl bg-white text-center border shadow-2xl">
+                        <div class="p-2">
+                            <div class="">
+                                <h1 class="mb-10 text-2xl font-bold">DCR Edit Form</h1>
+                            </div>
+
+                            <div class="flex text-lg ">
+                                <div class="font-bold">
+                                    <label class="ml-16 w-40 text-left mt-2" for="fileNumber">File Number</label>
+                                </div>
+                                <input type="text" class="border border-black p-2 rounded-lg mb-4 w-72 "
+                                    aria-describedby="emailHelp" name="fileNumber"
+                                    v-model="currentCorrespondence.fileNumber">
+                            </div>
+
+                            <div class="flex text-lg ">
+                                <div class="font-bold">
+                                    <label class="ml-16 w-40 text-left mt-2" for="subject">Subject</label>
+                                </div>
+                                <input type="text" class="border border-black p-2 rounded-lg mb-4 w-72"
+                                    aria-describedby="emailHelp" name="subject" v-model="currentCorrespondence.subject">
+                            </div>
+
+                            <div class="flex text-lg ">
+                                <div class="font-bold">
+                                    <label class="ml-2 pr-8 text-left mt-2" for="receivedFrom">From Whom
+                                        Received</label>
+                                </div>
+                                <input type="text" class="border border-black p-2 rounded-lg mb-4 w-72"
+                                    aria-describedby="emailHelp" name="receivedFrom"
+                                    v-model="currentCorrespondence.receivedFrom">
+                            </div>
+
+                            <div class="flex text-lg ">
+                                <div class="font-bold">
+                                    <label class="ml-10 w-40  " for="areaOfFiling">Area of Filing</label>
+                                </div>
+                                <select class="border border-black p-2 rounded-lg mb-4 ml-4 w-72"
+                                    aria-label="Default select example" name="areaOfFiling"
+                                    v-model="currentCorrespondence.filing_area_id">
+                                    <option value="1">Letters</option>
+                                    <option value="2">Invitation</option>
+                                    <option value="3">Temp File</option>
+                                    <option value="4">File</option>
+                                    <option value="5">Cabinet File</option>
+                                    <option value="6">Note for Cabinet</option>
+                                    <option value="7">DRAFT Note for Cabinet</option>
+                                    <option value="8">Ministerial Minutes</option>
+                                    <option value="9">Performance Appraisals (PAR)</option>
+                                    <option value="10">Prime ministers' mails</option>
+                                    <option value="11">Registry Mails</option>
+                                    <option value="12">Contractual Agreement</option>
+                                    <option value="13">Memo</option>
+                                    <option value="14">Private/Confidential</option>
+                                    <option value="15">National Security Council
+                                        Secretariat (NSCS) </option>
+                                    <option value="16">Form</option>
+                                    <option value="17">Miscellaneous</option>
+                                </select>
+
+                            </div>
+
+                            <div class="flex text-lg ">
+                                <div class="font-bold">
+                                    <label class="ml-16 w-40 text-left mt-2" for="correspondenceDate">Date of
+                                        Letter</label>
+                                </div>
+                                <input type="date" class="border border-black p-2 rounded-lg mb-4 w-72"
+                                    aria-describedby="emailHelp" name="correspondenceDate"
+                                    v-model="currentCorrespondence.correspondenceDate">
+                            </div>
+
+                            <div class="flex text-lg ">
+                                <div class="font-bold">
+                                    <label class="ml-16 w-40 text-left mt-2" for="dateReceived">Date of Receipt</label>
+                                </div>
+                                <input type="date" class="border border-black p-2 rounded-lg mb-4 w-72"
+                                    aria-describedby="emailHelp" name="dateReceived"
+                                    v-model="currentCorrespondence.dateReceived">
+                            </div>
+
+                            <div class="flex  text-lg ">
+                                <div class="font-bold">
+                                    <label class="ml-2 pr-12 w-42 text-left mt-2"
+                                        for="comments">Remarks/Comments</label>
+                                </div>
+                                <textarea type="text" class="border border-black p-2 rounded-lg mb-4 w-72"
+                                    aria-describedby="emailHelp" name="comments"
+                                    v-model="currentCorrespondence.comments" />
+                            </div>
+                        </div>
+                        <div class="flex justify-around pb-2">
+
+                            <button type="button"
+                                class=" btn bg-red-500 hover:bg-red-600 transition-all duration-200  text-white rounded-lg p-2"
+                                onclick="my_modal_2.close()">Close</button>
+
+                            <button type="button"
+                                class="btn bg-blue-500 hover:bg-blue-600 transition-all duration-200  text-white rounded-lg p-2"
+                                @click="updateCorrespondenceInfo()">
+                                Update
+                            </button>
+
+                        </div>
+                    </div>
+                </form>
             </div>
         </dialog>
     </div>
@@ -105,120 +240,15 @@
             <div role="tabpanel" class="tab-content bg-base-100 border-base-300 rounded-box p-6">
 
                 <EasyDataTable :headers="CorrespondenceHeaders" :items="correspondenceInfo">
-                    <template #item-navUrl="{}">
-                        <!-- Edit Modal -->
-                        <div class="flex flex-row-reverse pr-10">
-                            <!-- Open the modal using ID.showModal() method -->
-                            <!-- <button class="btn bg-green-400" onclick="my_modal_2.showModal()">Edit</button> -->
-                            <button class="btn bg-green-400" @click="deleteCorrespondenceInfo()">Edit</button>
-                            <dialog id="my_modal_2" class="modal">
-                                <div class="mb-96">
-                                    <form @click="handleInfoSubmit()">
-                                        <div class="flex justify-center py-5">
-                                            <div
-                                                class="p-5 rounded-xl bg-white max-w-2xl flex-1 text-center border shadow-2xl">
-                                                <div class="grid grid-cols-3 place-items-center ">
-                                                    <div class=" col-span-3">
-                                                        <h1 class=" mb-10 text-2xl font-bold">DCR Edit Form</h1>
-                                                    </div>
-                                                    <div class="font-bold text-lg ">
-                                                        <label class="text-left" for="fileNumber">File Number</label>
-                                                    </div>
-                                                    <div class="col-span-2">
-                                                        <input type="text"
-                                                            class="border border-black p-2 rounded-lg mb-4 w-96 "
-                                                            aria-describedby="emailHelp" name="fileNumber">
-                                                    </div>
-                                                    <div class="font-bold text-lg">
-                                                        <label for="subject">Subject</label>
-                                                    </div>
-                                                    <div class="col-span-2">
-                                                        <input type="text"
-                                                            class="border border-black p-2 rounded-lg mb-4 w-96"
-                                                            aria-describedby="emailHelp" name="subject">
-                                                    </div>
-                                                    <div class="font-bold text-lg">
-                                                        <label for="subject">From Whom Received</label>
-                                                    </div>
-                                                    <div class="col-span-2">
-                                                        <input type="text"
-                                                            class="border border-black p-2 rounded-lg mb-4 w-96"
-                                                            aria-describedby="emailHelp" name="fromWhomReceived">
-                                                    </div>
-                                                    <div class="font-bold text-lg">
-                                                        <label for="areaOfFiling">Area of Filing</label>
-                                                    </div>
-                                                    <div class="col-span-2">
-                                                        <select class="w-96 border border-black p-2 rounded-lg mb-4"
-                                                            aria-label="Default select example" name="areaOfFiling">
-                                                            <option value="letters">Letters</option>
-                                                            <option value="invitation">Invitation</option>
-                                                            <option value="temp_file">Temp File</option>
-                                                            <option value="file">File</option>
-                                                            <option value="cabinet_file">Cabinet File</option>
-                                                            <option value="note_for_cabinet">Note for Cabinet</option>
-                                                            <option value="draft_note_for_cabinet">DRAFT Note for
-                                                                Cabinet</option>
-                                                            <option value="ministerial_minutes">Ministerial Minutes
-                                                            </option>
-                                                            <option value="performance_appraisals">Performance
-                                                                Appraisals (PAR)</option>
-                                                            <option value="Prime_ministers_mails">Prime ministers' mails
-                                                            </option>
-                                                            <option value="registry_mails">Registry Mails</option>
-                                                            <option value="contractual_agreement">Contractual Agreement
-                                                            </option>
-                                                            <option value="memo">Memo</option>
-                                                            <option value="private_confidential">Private/Confidential
-                                                            </option>
-                                                            <option value="national_security_council_secretariat">
-                                                                National Security Council
-                                                                Secretariat (NSCS) </option>
-                                                            <option value="form">Form</option>
-                                                            <option value="miscellaneous">Miscellaneous</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="font-bold text-lg">
-                                                        <label for="dateOfLetters"> Date of Letter</label>
-                                                    </div>
-                                                    <div class="col-span-2">
-                                                        <input type="date"
-                                                            class="border border-black p-2 rounded-lg mb-4 "
-                                                            aria-describedby="emailHelp" name="dateOfLetters">
-                                                    </div>
-                                                    <div class="font-bold text-lg">
-                                                        <label for="dateOfReceipt">Date of Receipt</label>
-                                                    </div>
-                                                    <div class="col-span-2">
-                                                        <input type="date"
-                                                            class="border border-black p-2 rounded-lg mb-4 "
-                                                            aria-describedby="emailHelp" name="dateOfReceipt">
-                                                    </div>
-                                                    <div class="font-bold text-lg">
-                                                        <label for="remarksComments">Remarks/Comments</label>
-                                                    </div>
-                                                    <div class="col-span-2">
-                                                        <textarea type="text"
-                                                            class="border border-black p-2 rounded-lg mb-4 w-96 h-20"
-                                                            aria-describedby="emailHelp" name="remarksComments" />
-                                                    </div>
-                                                </div>
-                                                <div class="flex justify-around">
-                                                    <button
-                                                        class="bg-red-500 hover:bg-red-600 transition-all duration-200  text-white rounded-lg p-2">Close</button>
+                    <template
+                        #item-navUrl="{ id, fileNumber, subject, receivedFrom, filing_area_id, correspondenceDate, dateReceived, comments }">
+                       <div class="flex">
+                        <button class="btn bg-green-400"
+                            @click="setcurrentCorrespondence({ id, fileNumber, subject, receivedFrom, filing_area_id, correspondenceDate, dateReceived, comments })">Edit</button>
 
-                                                    <button @click="handleInfoSubmit()" type="submit"
-                                                        class="bg-blue-500 hover:bg-blue-600 transition-all duration-200  text-white rounded-lg p-2">
-                                                        Submit
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </form>
-
-                                </div>
-                            </dialog>
-                        </div>
+                            <button class="btn bg-red-400"
+                            @click="deleteCorrespondenceInfo(id)">Delete</button>
+                       </div> 
                     </template>
 
                 </EasyDataTable>
@@ -278,7 +308,7 @@ export default {
                 const response = await axios.get(
                     `${import.meta.env.VITE_API_URL}/correspondence`, config
                 );
-                // console.log(response);
+                console.log(response);
                 this.correspondenceInfo = response.data.data
 
                 // console.log(this.correspondenceInfo)
@@ -289,6 +319,23 @@ export default {
             }
 
         },
+
+        async setcurrentCorrespondence(value) {
+            this.currentCorrespondence = {
+                id: value.id,
+                fileNumber: value.fileNumber,
+                subject: value.subject,
+                receivedFrom: value.receivedFrom,
+                filing_area_id: value.filing_area_id,
+                correspondenceDate: value.correspondenceDate,
+                dateReceived: value.dateReceived,
+                comments: value.comments
+
+            }
+            my_modal_2.showModal()
+
+        },
+
 
 
         // Create Correspondence Info
@@ -306,10 +353,14 @@ export default {
 
             try {
                 const response = await axios.post(
-                    `${import.meta.env.VITE_API_URL}/correspondence`, 
+                    `${import.meta.env.VITE_API_URL}/correspondence`,
                     this.correspondenceForm,
                     config
                 );
+
+                my_modal_1.close()
+
+                this.getCorrespondenceInfo()
 
                 console.log(response)
 
@@ -317,52 +368,59 @@ export default {
 
                 console.log(e)
             }
-        }
-    },
-    // Update Correspondence Info
-    async updateCorrespondenceInfo() {
-        const { user } = useAuthStore();
 
-        const config = {
-            headers: {
-                Authorization: `Bearer ${user.token}`,
-            },
-        };
 
-        try {
-            const response = await axios.put(
-                `${import.meta.env.VITE_API_URL}/correspondence`, config
-            );
+        },
 
-            // console.log(response)
+        // Update Correspondence Info
+        async updateCorrespondenceInfo() {
+            const { user } = useAuthStore();
+            console.log('Hello')
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${user.token}`,
+                },
+            };
 
-        } catch (e) {
+            try {
+                const response = await axios.put(
+                    `${import.meta.env.VITE_API_URL}/correspondence/${this.currentCorrespondence.id}`,
+                    this.currentCorrespondence,
+                    config
+                );
+                my_modal_2.close()
 
-            console.log(e)
-        }
-    },
+                this.getCorrespondenceInfo()
+                // console.log(response)
 
-    //Delete Get Correspondence Info
-    async deleteCorrespondenceInfo() {
-        const { user } = useAuthStore();
+            } catch (e) {
 
-        const config = {
-            headers: {
-                Authorization: `Bearer ${user.token}`,
-            },
-        };
+                console.log(e)
+            }
+        },
 
-        try {
-            const response = await axios.delete(
-                `${import.meta.env.VITE_API_URL}/correspondence/1`, config
-            );
+        //Delete Get Correspondence Info
+        async deleteCorrespondenceInfo(id) {
+            const { user } = useAuthStore();
 
-            console.log(response)
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${user.token}`,
+                },
+            };
+            try {
+                const response = await axios.delete(
+                    `${import.meta.env.VITE_API_URL}/correspondence/${id}`,
+                     config
+                );
+                this.getCorrespondenceInfo()
+                // console.log(response)
 
-        } catch (e) {
+            } catch (e) {
+                console.log(e)
+            }
+        },
 
-            console.log(e)
-        }
     },
     created() {
         this.getCorrespondenceInfo()
@@ -372,14 +430,15 @@ export default {
         return {
 
             CorrespondenceHeaders: [
+                { text: "ID", value: "id" },
                 { text: "DATE OF RECEIPT", value: "dateReceived" },
                 { text: "DATE OF LETTERS", value: "correspondenceDate" },
-                { text: "FILING AREA", value: "filingArea" },
+                { text: "FILING AREA", value: "filing_area_id" },
                 { text: "FROM WHOM RECEIVED", value: "receivedFrom" },
                 { text: "SUBJECT", value: "subject" },
                 { text: "FILE NUMBER", value: "fileNumber" },
                 { text: "REMARKS/COMMENTS", value: "comments" },
-                { text: "NAV", value: "navUrl", width: 50 },
+                { text: "OPTIONS", value: "navUrl", width: 50 },
             ],
             CorrespondenceInfoData: [
                 {
@@ -397,16 +456,17 @@ export default {
 
             correspondenceInfo: [],
 
-            correspondenceForm:{
-                 fileNumber:"",
-                 subject:"",
-                 receivedFrom:"",
-                 filing_area_id:"1",
-                 filingArea:"",
-                 correspondenceDate:"",
-                 dateReceived:"",
-                 comments:"",
-                
+            currentCorrespondence: {},
+
+            correspondenceForm: {
+                fileNumber: "",
+                subject: "",
+                receivedFrom: "",
+                filing_area_id: "",
+                correspondenceDate: "",
+                dateReceived: "",
+                comments: "",
+
 
             },
 

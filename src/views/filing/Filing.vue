@@ -266,7 +266,7 @@ export default {
             ],
 
             filing_areaInfo: [],
-            
+            searchValue: "",
 
             currentfiling_area: {},
 

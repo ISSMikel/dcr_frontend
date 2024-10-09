@@ -91,6 +91,6 @@ async function onSubmit(values) {
 <style lang="css">
 body {
     height: 100vh;
-    background: #86bdb8;
+    background: #b6cecc;
 }
 </style>

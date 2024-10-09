@@ -46,24 +46,15 @@
                                 <select class="border border-black p-2 rounded-lg mb-4 ml-4 w-72"
                                     aria-label="Default select example" name="areaOfFiling"
                                     v-model="correspondenceForm.filing_area_id">
-                                    <option value="1">Letters</option>
-                                    <option value="2">Invitation</option>
-                                    <option value="3">Temp File</option>
-                                    <option value="4">File</option>
-                                    <option value="5">Cabinet File</option>
-                                    <option value="6">Note for Cabinet</option>
-                                    <option value="7">DRAFT Note for Cabinet</option>
-                                    <option value="8">Ministerial Minutes</option>
-                                    <option value="9">Performance Appraisals (PAR)</option>
-                                    <option value="10">Prime ministers' mails</option>
-                                    <option value="11">Registry Mails</option>
-                                    <option value="12">Contractual Agreement</option>
-                                    <option value="13">Memo</option>
-                                    <option value="14">Private/Confidential</option>
-                                    <option value="15">National Security Council
-                                        Secretariat (NSCS) </option>
-                                    <option value="16">Form</option>
-                                    <option value="17">Miscellaneous</option>
+                                    <option value="default">
+                                        Please choose an option
+                                    </option>
+                                    <option v-for="item in filing_areaInfo" :key="item.id" :value="item.id">
+
+                                        {{ item.name }}
+
+
+                                    </option>
                                 </select>
 
                             </div>
@@ -87,6 +78,14 @@
                                     v-model="correspondenceForm.dateReceived">
                             </div>
 
+                            <div class="flex text-lg ">
+                                <div class="font-bold">
+                                    <label class="ml-16 w-40 text-left mt-2" for="sentDate">Date Sent</label>
+                                </div>
+                                <input type="date" class="border border-black p-2 rounded-lg mb-4 w-72"
+                                    aria-describedby="emailHelp" name="sentDate" v-model="correspondenceForm.sentDate">
+                            </div>
+
                             <div class="flex  text-lg ">
                                 <div class="font-bold">
                                     <label class="ml-2 pr-12 w-42 text-left mt-2"
@@ -95,6 +94,14 @@
                                 <textarea type="text" class="border border-black p-2 rounded-lg mb-4 w-72"
                                     aria-describedby="emailHelp" name="comments"
                                     v-model="correspondenceForm.comments" />
+                            </div>
+
+                            <div class="flex text-lg ">
+                                <div class="font-bold">
+                                    <label class="ml-16 w-40 text-left mt-2" for="flagged">Flagged</label>
+                                </div>
+                                <input type="checkbox" class="border border-black p-2 rounded-lg mb-4 w-72"
+                                    aria-describedby="emailHelp" name="flagged" v-model="correspondenceForm.flagged">
                             </div>
                         </div>
                         <div class="flex justify-around pb-2">
@@ -203,6 +210,14 @@
                                     aria-describedby="emailHelp" name="dateReceived"
                                     v-model="currentCorrespondence.dateReceived">
                             </div>
+                            <div class="flex text-lg ">
+                                <div class="font-bold">
+                                    <label class="ml-16 w-40 text-left mt-2" for="sentDate">Date Sent</label>
+                                </div>
+                                <input type="date" class="border border-black p-2 rounded-lg mb-4 w-72"
+                                    aria-describedby="emailHelp" name="sentDate"
+                                    v-model="currentCorrespondence.sentDate">
+                            </div>
 
                             <div class="flex  text-lg ">
                                 <div class="font-bold">
@@ -212,6 +227,15 @@
                                 <textarea type="text" class="border border-black p-2 rounded-lg mb-4 w-72"
                                     aria-describedby="emailHelp" name="comments"
                                     v-model="currentCorrespondence.comments" />
+                            </div>
+
+                            <div class="flex text-lg ">
+                                <div class="font-bold">
+                                    <label class="ml-16 w-40 text-left mt-2" for="flagged">Flagged</label>
+                                </div>
+                                <input type="checkbox" class="border border-black p-2 rounded-lg mb-4 w-72"
+                                    aria-describedby="emailHelp" name="flagged" true-value="1" false-value="0"
+                                    v-model="currentCorrespondence.flagged">
                             </div>
                         </div>
                         <div class="flex justify-around pb-2">
@@ -238,17 +262,25 @@
             <input type="radio" name="my_tabs_2" role="tab" class="tab" aria-label="Correspondence Info"
                 checked="checked" />
             <div role="tabpanel" class="tab-content bg-base-100 border-base-300 rounded-box p-6">
+                <div class="mb-2">
+                    <h1 class=" text-center text-xl mb-2 bg-teal-700 py-2 text-white rounded">Correspondence List
+                    </h1>
 
-                <EasyDataTable :headers="CorrespondenceHeaders" :items="correspondenceInfo">
+
+                    <div class="text-right">
+                        <span class="font-bold">Search: </span>
+                        <input class="rounded border" type="text" v-model="searchValue">
+                    </div>
+                </div>
+                <EasyDataTable :headers="CorrespondenceHeaders" :items="correspondenceInfo" :search-value="searchValue">
                     <template
-                        #item-navUrl="{ id, fileNumber, subject, receivedFrom, filing_area_id, correspondenceDate, dateReceived, comments }">
-                       <div class="flex">
-                        <button class="btn bg-green-400"
-                            @click="setcurrentCorrespondence({ id, fileNumber, subject, receivedFrom, filing_area_id, correspondenceDate, dateReceived, comments })">Edit</button>
+                        #item-navUrl="{ id, fileNumber, subject, receivedFrom, filing_area_id, correspondenceDate, dateReceived, sentDate, comments, flagged }">
+                        <div class="flex">
+                            <button class="btn bg-green-400"
+                                @click="setcurrentCorrespondence({ id, fileNumber, subject, receivedFrom, filing_area_id, correspondenceDate, dateReceived, sentDate, comments, flagged })">Edit</button>
 
-                            <button class="btn bg-red-400"
-                            @click="deleteCorrespondenceInfo(id)">Delete</button>
-                       </div> 
+                            <button class="btn bg-red-400" @click="deleteCorrespondenceInfo(id)">Delete</button>
+                        </div>
                     </template>
 
                 </EasyDataTable>
@@ -308,10 +340,8 @@ export default {
                 const response = await axios.get(
                     `${import.meta.env.VITE_API_URL}/correspondence`, config
                 );
-                console.log(response);
+                // console.log(response);
                 this.correspondenceInfo = response.data.data
-
-                // console.log(this.correspondenceInfo)
 
             } catch (e) {
 
@@ -320,19 +350,53 @@ export default {
 
         },
 
+        // Get Correspondence Info
+        async getFilingAreaInfo() {
+            const { user } = useAuthStore();
+            // console.log(user);
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${user.token}`,
+                },
+            };
+
+            try {
+                const response = await axios.get(
+                    `${import.meta.env.VITE_API_URL}/filing-area`, config
+                );
+                // console.log(response);
+
+                // console.log(response.data.data[0].name);
+
+                this.filing_areaInfo = response.data.data
+
+                console.log(this.filing_areaInfo)
+
+            } catch (e) {
+
+                console.log(e)
+            }
+
+        },
+
+
         async setcurrentCorrespondence(value) {
+            console.log(value)
             this.currentCorrespondence = {
                 id: value.id,
                 fileNumber: value.fileNumber,
                 subject: value.subject,
                 receivedFrom: value.receivedFrom,
+                sentDate: value.sentDate,
                 filing_area_id: value.filing_area_id,
                 correspondenceDate: value.correspondenceDate,
                 dateReceived: value.dateReceived,
-                comments: value.comments
+                comments: value.comments,
+                flagged: value.flagged
 
             }
             my_modal_2.showModal()
+
 
         },
 
@@ -411,7 +475,7 @@ export default {
             try {
                 const response = await axios.delete(
                     `${import.meta.env.VITE_API_URL}/correspondence/${id}`,
-                     config
+                    config
                 );
                 this.getCorrespondenceInfo()
                 // console.log(response)
@@ -424,6 +488,7 @@ export default {
     },
     created() {
         this.getCorrespondenceInfo()
+        this.getFilingAreaInfo()
     },
 
     data() {
@@ -433,7 +498,8 @@ export default {
                 { text: "ID", value: "id" },
                 { text: "DATE OF RECEIPT", value: "dateReceived" },
                 { text: "DATE OF LETTERS", value: "correspondenceDate" },
-                { text: "FILING AREA", value: "filing_area_id" },
+                { text: "DATE SENT", value: "sentDate" },
+                { text: "FILING AREA", value: "filing_area.name" },
                 { text: "FROM WHOM RECEIVED", value: "receivedFrom" },
                 { text: "SUBJECT", value: "subject" },
                 { text: "FILE NUMBER", value: "fileNumber" },
@@ -455,8 +521,10 @@ export default {
             ],
 
             correspondenceInfo: [],
+            filing_areaInfo:[],
 
             currentCorrespondence: {},
+            searchValue: "",
 
             correspondenceForm: {
                 fileNumber: "",
@@ -465,8 +533,9 @@ export default {
                 filing_area_id: "",
                 correspondenceDate: "",
                 dateReceived: "",
+                sentDate: "",
                 comments: "",
-
+                flagged: false
 
             },
 

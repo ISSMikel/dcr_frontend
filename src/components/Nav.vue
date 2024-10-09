@@ -9,25 +9,34 @@ const { user } = storeToRefs(authStore);
 
 <template>
     <div>
-    <nav v-show="authStore.user" class="flex items-center justify-between flex-wrap bg-teal-700 px-24 py-1">
-        <div class="flex items-center flex-shrink-0 text-white mr-6"> </div>
+        <nav v-show="authStore.user" class="flex items-center justify-between flex-wrap bg-teal-700 px-24 py-1">
+            <div class="flex items-center flex-shrink-0 text-white mr-6"> </div>
 
-        <div class="w-full">
-            <div class="flex text-lg content-center">
-             <router-link to="/" class=" mr-20 text-lg nav-item nav-link text-white hover:text-white self-center hover:bg-teal-400 rounded ">Home</router-link>
-             <router-link to="/filing" class=" mr-52 w-50 text-lg nav-item nav-link text-white hover:text-white self-center hover:bg-teal-400 rounded ">Filing Area</router-link>
-            <!-- <router-link to="/users" class="text-lg nav-item nav-link text-white hover:text-white self-center hover:bg-green-400 rounded ml-36 mr-40">Users</router-link>    -->
-            <h1 class="text-2xl text-white font-bold mt-2 w-100">Digital Correspondence Register</h1>
-            <h1 class="text-lg nav-item nav-link text-white hover:text-white w-50">Logged In: {{
+            <div class="w-full">
+                <div class="flex items-center justify-between">
+                    <div class="flex space-x-4 ">
+                        <router-link to="/"
+                            class=" text-lg nav-item nav-link text-white hover:text-white self-center hover:bg-teal-400 rounded ">Home</router-link>
+                        <router-link to="/filing"
+                            class=" text-lg nav-item nav-link text-white hover:text-white self-center text-center hover:bg-teal-400 rounded ">Filing
+                            Area</router-link>
+                    </div>
+                    <!-- <router-link to="/users" class="text-lg nav-item nav-link text-white hover:text-white self-center hover:bg-green-400 rounded ml-36 mr-40">Users</router-link>    -->
+                    <h1 class="text-2xl text-white font-bold ">Digital Correspondence Register</h1>
+                <div class="flex">
+                    <h1 class="text-lg nav-item nav-link text-white hover:text-white ">Logged In: {{
                         authStore.user?.user.name }}</h1>
-               
-                   <button @click="authStore.logout()" class="flex-row-reverse bg-red-800 hover:bg-red-400 text-white  py-2 px-4 border border-gred-700 rounded">Logout</button>            
-            </div>
-            
 
-            
-        </div>
-    </nav>    
+                    <button @click="authStore.logout()"
+                        class="bg-red-800 hover:bg-red-400 text-white font-semibold  py-2 px-2 rounded">Logout</button>
+                </div
+                
+                ></div>
+
+
+
+            </div>
+        </nav>
     </div>
-    
+
 </template>

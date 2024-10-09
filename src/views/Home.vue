@@ -170,24 +170,15 @@
                                 <select class="border border-black p-2 rounded-lg mb-4 ml-4 w-72"
                                     aria-label="Default select example" name="areaOfFiling"
                                     v-model="currentCorrespondence.filing_area_id">
-                                    <option value="1">Letters</option>
-                                    <option value="2">Invitation</option>
-                                    <option value="3">Temp File</option>
-                                    <option value="4">File</option>
-                                    <option value="5">Cabinet File</option>
-                                    <option value="6">Note for Cabinet</option>
-                                    <option value="7">DRAFT Note for Cabinet</option>
-                                    <option value="8">Ministerial Minutes</option>
-                                    <option value="9">Performance Appraisals (PAR)</option>
-                                    <option value="10">Prime ministers' mails</option>
-                                    <option value="11">Registry Mails</option>
-                                    <option value="12">Contractual Agreement</option>
-                                    <option value="13">Memo</option>
-                                    <option value="14">Private/Confidential</option>
-                                    <option value="15">National Security Council
-                                        Secretariat (NSCS) </option>
-                                    <option value="16">Form</option>
-                                    <option value="17">Miscellaneous</option>
+                                    <option value="default">
+                                        Please choose an option
+                                    </option>
+                                    <option v-for="item in filing_areaInfo" :key="item.id" :value="item.id">
+
+                                        {{ item.name }}
+
+
+                                    </option>
                                 </select>
 
                             </div>
@@ -275,11 +266,14 @@
                 <EasyDataTable :headers="CorrespondenceHeaders" :items="correspondenceInfo" :search-value="searchValue">
                     <template
                         #item-navUrl="{ id, fileNumber, subject, receivedFrom, filing_area_id, correspondenceDate, dateReceived, sentDate, comments, flagged }">
-                        <div class="flex">
+                        <div class="flex space-x-2 items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#000000" viewBox="0 0 256 256"><path d="M42.76,50A8,8,0,0,0,40,56V224a8,8,0,0,0,16,0V179.77c26.79-21.16,49.87-9.75,76.45,3.41,16.4,8.11,34.06,16.85,53,16.85,13.93,0,28.54-4.75,43.82-18a8,8,0,0,0,2.76-6V56A8,8,0,0,0,218.76,50c-28,24.23-51.72,12.49-79.21-1.12C111.07,34.76,78.78,18.79,42.76,50ZM216,172.25c-26.79,21.16-49.87,9.74-76.45-3.41-25-12.35-52.81-26.13-83.55-8.4V59.79c26.79-21.16,49.87-9.75,76.45,3.4,25,12.35,52.82,26.13,83.55,8.4Z"></path></svg>
                             <button class="btn bg-green-400"
                                 @click="setcurrentCorrespondence({ id, fileNumber, subject, receivedFrom, filing_area_id, correspondenceDate, dateReceived, sentDate, comments, flagged })">Edit</button>
 
                             <button class="btn bg-red-400" @click="deleteCorrespondenceInfo(id)">Delete</button>
+
+                            
                         </div>
                     </template>
 

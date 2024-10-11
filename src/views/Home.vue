@@ -276,19 +276,16 @@
                                 <input v-model="filtersubjectArea" />
                             </div> -->
                             <div v-if="!showFilingAreaFilter">
-                                <select class="filing_area.name-selector border-2 border-gray-600" v-model="filterfilingArea"
-                                    name="filing_area.name">
-                                    <option value="13">
-                                        Memo
-                                    </option>
-                                    <option value="4">
-                                        File
-                                    </option>
-                                    <option value="all">
-                                        all
+                                <select class="filing_area.name-selector border-2 border-gray-600"
+                                    v-model="filterfilingArea" name="filing_area.name">
+                                    <option value="all">All</option>
+                                    <option v-for="item in filing_areaInfo" :key="item.id" :value="item.name">
+
+                                        {{ item.name }}
+
+
                                     </option>
                                 </select>
-
                             </div>
                         </div>
 
@@ -301,7 +298,8 @@
                                     @click.stop="showsubjectFilter = !showsubjectFilter">
                                 {{ header.text }}
                             </div>
-                            <input class="border-2 border-gray-600 mb-1" v-if="!showsubjectFilter" v-model="filtersubjectArea" />
+                            <input class="border-2 border-gray-600 mb-1" v-if="!showsubjectFilter"
+                                v-model="filtersubjectArea" />
 
                         </div>
 
@@ -395,7 +393,7 @@
 
             </div>
 
-            <input type="radio" name="my_tabs_2" role="tab" class="tab" aria-label="Recently Updated" />
+            <input type="radio" name="my_tabs_2" role="tab" class="tab" aria-label="Flagged" />
             <div role="tabpanel" class="tab-content bg-base-100 border-base-300 rounded-box p-6">
 
                 <EasyDataTable :headers="headers" :items="items" />
@@ -725,7 +723,7 @@ export default {
             searchValue: "",
 
             showFilingAreaFilter: true,
-            filterfilingArea: "all",
+            filterfilingArea: "",
 
             showsubjectFilter: true,
             filtersubjectArea: "",
@@ -789,12 +787,12 @@ export default {
             if (this.filterfilingArea != "all") {
                 return [{
                     field: "filing_area.name",
-                    comparison: "=",
-                    // comparison: (value, criteria) => ( console.log('subject'+ value),
-                    //     value != null && criteria != null &&
-                    //     typeof value === 'string' && value.includes(`${criteria}`)
+                    // comparison: "=",
+                    comparison: (value, criteria) => (console.log('subject' + value),
+                        value != null && criteria != null &&
+                        typeof value === 'string' && value.includes(`${criteria}`)
 
-                    // ),
+                    ),
                     criteria: this.filterfilingArea,
                 }]
             } else {

@@ -263,29 +263,132 @@
                         <input class="rounded border" type="text" v-model="searchValue">
                     </div>
                 </div>
-                <EasyDataTable :headers="CorrespondenceHeaders" :items="correspondenceInfo" :search-value="searchValue">
+
+                <EasyDataTable :headers="CorrespondenceHeaders" :items="correspondenceInfo" :search-value="searchValue"
+                    :filter-options="filterOptions">
+
+                    <template #header-filing_area.name="header">
+                        <div class="flex">
+                            {{ header.text }} <img src="../assets/funnel.svg" class="h-5 w-5 z-50"
+                                @click.stop="showFilingAreaFilter = !showFilingAreaFilter">
+
+                            <!-- <div class="" v-if="showFilingAreaFilter">
+                                <input v-model="filtersubjectArea" />
+                            </div> -->
+                            <div v-if="!showFilingAreaFilter">
+                                <select class="filing_area.name-selector border-2 border-gray-600" v-model="filterfilingArea"
+                                    name="filing_area.name">
+                                    <option value="13">
+                                        Memo
+                                    </option>
+                                    <option value="4">
+                                        File
+                                    </option>
+                                    <option value="all">
+                                        all
+                                    </option>
+                                </select>
+
+                            </div>
+                        </div>
+
+                    </template>
+
+                    <template #header-subject="header">
+                        <div>
+                            <div class="flex">
+                                <img src="../assets/funnel.svg" class="h-5 w-5 z-50"
+                                    @click.stop="showsubjectFilter = !showsubjectFilter">
+                                {{ header.text }}
+                            </div>
+                            <input class="border-2 border-gray-600 mb-1" v-if="!showsubjectFilter" v-model="filtersubjectArea" />
+
+                        </div>
+
+                    </template>
+
+                    <template #header-dateReceived="header">
+                        <div>
+                            <div class="flex">
+                                <img src="../assets/funnel.svg" class="h-5 w-5 z-50"
+                                    @click.stop="showdateReceivedFilter = !showdateReceivedFilter">
+                                {{ header.text }}
+                            </div>
+
+                            <input class="border-2 border-gray-600 mb-1" v-if="!showdateReceivedFilter"
+                                v-model="filterdateReceived" />
+                        </div>
+
+
+                    </template>
+
+                    <template #header-correspondenceDate="header">
+                        <div>
+                            <div class="flex">
+                                <img src="../assets/funnel.svg" class="h-5 w-5 z-50"
+                                    @click.stop="showcorrespondenceDateFilter = !showcorrespondenceDateFilter">
+                                {{ header.text }}
+                            </div>
+                            <input class="border-2 border-gray-600 mb-1" v-if="!showcorrespondenceDateFilter"
+                                v-model="filtercorrespondenceDate" />
+
+                        </div>
+
+                    </template>
+
+
+                    <template #header-sentDate="header">
+                        <div>
+                            <div class="flex">
+                                <img src="../assets/funnel.svg" class="h-5 w-5 z-50"
+                                    @click.stop="showsentDateFilter = !showsentDateFilter">
+                                {{ header.text }}
+                            </div>
+                            <input class="border-2 border-gray-600" v-if="!showsentDateFilter"
+                                v-model="filtersentDate" />
+
+                        </div>
+
+                    </template>
+
                     <template
                         #item-navUrl="{ id, fileNumber, subject, receivedFrom, filing_area_id, correspondenceDate, dateReceived, sentDate, comments, flagged }">
+
                         <div class="flex space-x-2 items-center">
-                            
-                            
-                            <svg v-if="flagged === 0" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#000000" viewBox="0 0 256 256"
-                            @click="updateCorrespondenceFlagged(id, fileNumber, subject, receivedFrom, filing_area_id, correspondenceDate, dateReceived, sentDate, comments, flagged)"
-                            ><path d="M42.76,50A8,8,0,0,0,40,56V224a8,8,0,0,0,16,0V179.77c26.79-21.16,49.87-9.75,76.45,3.41,16.4,8.11,34.06,16.85,53,16.85,13.93,0,28.54-4.75,43.82-18a8,8,0,0,0,2.76-6V56A8,8,0,0,0,218.76,50c-28,24.23-51.72,12.49-79.21-1.12C111.07,34.76,78.78,18.79,42.76,50ZM216,172.25c-26.79,21.16-49.87,9.74-76.45-3.41-25-12.35-52.81-26.13-83.55-8.4V59.79c26.79-21.16,49.87-9.75,76.45,3.4,25,12.35,52.82,26.13,83.55,8.4Z"></path></svg>
-                            
-                            <svg v-else="flagged === 1" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#c83c3c" viewBox="0 0 256 256"
-                            @click="updateCorrespondenceUnflagged(id, fileNumber, subject, receivedFrom, filing_area_id, correspondenceDate, dateReceived, sentDate, comments, flagged)"
-                            ><path d="M232,56V176a8,8,0,0,1-2.76,6c-15.28,13.23-29.89,18-43.82,18-18.91,0-36.57-8.74-53-16.85C105.87,170,82.79,158.61,56,179.77V224a8,8,0,0,1-16,0V56a8,8,0,0,1,2.77-6h0c36-31.18,68.31-15.21,96.79-1.12C167,62.46,190.79,74.2,218.76,50A8,8,0,0,1,232,56Z"></path></svg>
-                            
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#365BEC" viewBox="0 0 256 256"
-                             @click="setcurrentCorrespondence({ id, fileNumber, subject, receivedFrom, filing_area_id, correspondenceDate, dateReceived, sentDate, comments, flagged })"
-                            ><path d="M227.32,73.37,182.63,28.69a16,16,0,0,0-22.63,0L36.69,152A15.86,15.86,0,0,0,32,163.31V208a16,16,0,0,0,16,16H216a8,8,0,0,0,0-16H115.32l112-112A16,16,0,0,0,227.32,73.37ZM136,75.31,152.69,92,68,176.69,51.31,160ZM48,208V179.31L76.69,208Zm48-3.31L79.32,188,164,103.31,180.69,120Zm96-96L147.32,64l24-24L216,84.69Z"></path></svg>
-                            
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#c83c3c" viewBox="0 0 256 256"
-                            @click="deleteCorrespondenceInfo(id)"
-                            ><path d="M216,48H176V40a24,24,0,0,0-24-24H104A24,24,0,0,0,80,40v8H40a8,8,0,0,0,0,16h8V208a16,16,0,0,0,16,16H192a16,16,0,0,0,16-16V64h8a8,8,0,0,0,0-16ZM96,40a8,8,0,0,1,8-8h48a8,8,0,0,1,8,8v8H96Zm96,168H64V64H192ZM112,104v64a8,8,0,0,1-16,0V104a8,8,0,0,1,16,0Zm48,0v64a8,8,0,0,1-16,0V104a8,8,0,0,1,16,0Z"></path></svg>
-                          
-                        </div> 
+
+
+                            <svg v-if="flagged === 0" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                fill="#000000" viewBox="0 0 256 256" class="cursor-pointer"
+                                @click="updateCorrespondenceFlagged(id, fileNumber, subject, receivedFrom, filing_area_id, correspondenceDate, dateReceived, sentDate, comments, flagged)">
+                                <path
+                                    d="M42.76,50A8,8,0,0,0,40,56V224a8,8,0,0,0,16,0V179.77c26.79-21.16,49.87-9.75,76.45,3.41,16.4,8.11,34.06,16.85,53,16.85,13.93,0,28.54-4.75,43.82-18a8,8,0,0,0,2.76-6V56A8,8,0,0,0,218.76,50c-28,24.23-51.72,12.49-79.21-1.12C111.07,34.76,78.78,18.79,42.76,50ZM216,172.25c-26.79,21.16-49.87,9.74-76.45-3.41-25-12.35-52.81-26.13-83.55-8.4V59.79c26.79-21.16,49.87-9.75,76.45,3.4,25,12.35,52.82,26.13,83.55,8.4Z">
+                                </path>
+                            </svg>
+
+                            <svg v-else="flagged === 1" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                fill="#c83c3c" viewBox="0 0 256 256" class="cursor-pointer"
+                                @click="updateCorrespondenceUnflagged(id, fileNumber, subject, receivedFrom, filing_area_id, correspondenceDate, dateReceived, sentDate, comments, flagged)">
+                                <path
+                                    d="M232,56V176a8,8,0,0,1-2.76,6c-15.28,13.23-29.89,18-43.82,18-18.91,0-36.57-8.74-53-16.85C105.87,170,82.79,158.61,56,179.77V224a8,8,0,0,1-16,0V56a8,8,0,0,1,2.77-6h0c36-31.18,68.31-15.21,96.79-1.12C167,62.46,190.79,74.2,218.76,50A8,8,0,0,1,232,56Z">
+                                </path>
+                            </svg>
+
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#365BEC"
+                                viewBox="0 0 256 256" class="cursor-pointer"
+                                @click="setcurrentCorrespondence({ id, fileNumber, subject, receivedFrom, filing_area_id, correspondenceDate, dateReceived, sentDate, comments, flagged })">
+                                <path
+                                    d="M227.32,73.37,182.63,28.69a16,16,0,0,0-22.63,0L36.69,152A15.86,15.86,0,0,0,32,163.31V208a16,16,0,0,0,16,16H216a8,8,0,0,0,0-16H115.32l112-112A16,16,0,0,0,227.32,73.37ZM136,75.31,152.69,92,68,176.69,51.31,160ZM48,208V179.31L76.69,208Zm48-3.31L79.32,188,164,103.31,180.69,120Zm96-96L147.32,64l24-24L216,84.69Z">
+                                </path>
+                            </svg>
+
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#c83c3c"
+                                viewBox="0 0 256 256" class="cursor-pointer" @click="deleteCorrespondenceInfo(id)">
+                                <path
+                                    d="M216,48H176V40a24,24,0,0,0-24-24H104A24,24,0,0,0,80,40v8H40a8,8,0,0,0,0,16h8V208a16,16,0,0,0,16,16H192a16,16,0,0,0,16-16V64h8a8,8,0,0,0,0-16ZM96,40a8,8,0,0,1,8-8h48a8,8,0,0,1,8,8v8H96Zm96,168H64V64H192ZM112,104v64a8,8,0,0,1-16,0V104a8,8,0,0,1,16,0Zm48,0v64a8,8,0,0,1-16,0V104a8,8,0,0,1,16,0Z">
+                                </path>
+                            </svg>
+
+                        </div>
                     </template>
 
                 </EasyDataTable>
@@ -319,6 +422,7 @@ import axios from "axios";
 import _ from "lodash";
 import { toast } from "vue3-toastify";
 import "vue3-toastify/dist/index.css";
+import { computed } from "vue";
 
 axios.defaults.withCredentials = true;
 axios.defaults.withXSRFToken = true;
@@ -470,12 +574,12 @@ export default {
             try {
                 const response = await axios.put(
                     `${import.meta.env.VITE_API_URL}/correspondence/${id}`,
-                     flaggedCorrespondence,
+                    flaggedCorrespondence,
                     config
                 );
-            
-          
-                
+
+
+
                 this.getCorrespondenceInfo()
                 // console.log(response)
 
@@ -485,8 +589,8 @@ export default {
             }
         },
 
-         // Update Correspondence flagged
-         async updateCorrespondenceUnflagged(id, fileNumber, subject, receivedFrom, filing_area_id, correspondenceDate, dateReceived, sentDate, comments, flagged) {
+        // Update Correspondence flagged
+        async updateCorrespondenceUnflagged(id, fileNumber, subject, receivedFrom, filing_area_id, correspondenceDate, dateReceived, sentDate, comments, flagged) {
             const { user } = useAuthStore();
             const config = {
                 headers: {
@@ -514,12 +618,12 @@ export default {
             try {
                 const response = await axios.put(
                     `${import.meta.env.VITE_API_URL}/correspondence/${id}`,
-                     unflaggedCorrespondence,
+                    unflaggedCorrespondence,
                     config
                 );
-            
-          
-                
+
+
+
                 this.getCorrespondenceInfo()
                 // console.log(response)
 
@@ -588,7 +692,7 @@ export default {
         return {
 
             CorrespondenceHeaders: [
-                { text: "ID", value: "id" },
+                // { text: "ID", value: "id" },
                 { text: "DATE OF RECEIPT", value: "dateReceived" },
                 { text: "DATE OF LETTERS", value: "correspondenceDate" },
                 { text: "DATE SENT", value: "sentDate" },
@@ -597,6 +701,7 @@ export default {
                 { text: "SUBJECT", value: "subject" },
                 { text: "FILE NUMBER", value: "fileNumber" },
                 { text: "REMARKS/COMMENTS", value: "comments" },
+                { text: "LAST UPDATED", value: "updated_at" },
                 { text: "OPTIONS", value: "navUrl", width: 50 },
             ],
             CorrespondenceInfoData: [
@@ -614,10 +719,25 @@ export default {
             ],
 
             correspondenceInfo: [],
-            filing_areaInfo:[],
+            filing_areaInfo: [],
 
             currentCorrespondence: {},
             searchValue: "",
+
+            showFilingAreaFilter: true,
+            filterfilingArea: "all",
+
+            showsubjectFilter: true,
+            filtersubjectArea: "",
+
+            showdateReceivedFilter: true,
+            filterdateReceived: "",
+
+            showcorrespondenceDateFilter: true,
+            filtercorrespondenceDate: "",
+
+            showsentDateFilter: true,
+            filtersentDate: "",
 
             correspondenceForm: {
                 fileNumber: "",
@@ -661,8 +781,90 @@ export default {
 
         }
 
+
+    },
+
+    computed: {
+        filterOptions() {
+            if (this.filterfilingArea != "all") {
+                return [{
+                    field: "filing_area.name",
+                    comparison: "=",
+                    // comparison: (value, criteria) => ( console.log('subject'+ value),
+                    //     value != null && criteria != null &&
+                    //     typeof value === 'string' && value.includes(`${criteria}`)
+
+                    // ),
+                    criteria: this.filterfilingArea,
+                }]
+            } else {
+                if (this.filtersubjectArea != "") {
+                    return [{
+
+                        field: "subject",
+                        comparison: (value, criteria) => (console.log('subject' + value),
+                            value != null && criteria != null &&
+                            typeof value === 'string' && value.toLowerCase().includes(criteria.toLowerCase())
+
+                        ),
+                        criteria: this.filtersubjectArea,
+                    }]
+
+                } else {
+                    if (this.filterdateReceived != "") {
+                        return [{
+
+                            field: "dateReceived",
+                            comparison: (value, criteria) => (console.log('subject' + value),
+                                value != null && criteria != null &&
+                                typeof value === 'string' && value.toLowerCase().includes(criteria.toLowerCase())
+
+                            ),
+                            criteria: this.filterdateReceived,
+                        }]
+
+                    } else {
+                        if (this.filtercorrespondenceDate != "") {
+                            return [{
+
+                                field: "correspondenceDate",
+                                comparison: (value, criteria) => (console.log('subject' + value),
+                                    value != null && criteria != null &&
+                                    typeof value === 'string' && value.toLowerCase().includes(criteria.toLowerCase())
+
+                                ),
+                                criteria: this.filtercorrespondenceDate,
+                            }]
+                        } else {
+                            if (this.filtersentDate != "") {
+                                return [{
+
+                                    field: "sentDate",
+                                    comparison: (value, criteria) => (console.log('subject' + value),
+                                        value != null && criteria != null &&
+                                        typeof value === 'string' && value.toLowerCase().includes(criteria.toLowerCase())
+
+                                    ),
+                                    criteria: this.filtersentDate,
+                                }]
+                            }
+                        }
+                    }
+
+
+                }
+
+                return []
+            }
+        },
+
+
+
     }
 }
+
+
+
 
 
 // const headers = [

@@ -396,8 +396,133 @@
             <input type="radio" name="my_tabs_2" role="tab" class="tab" aria-label="Flagged" />
             <div role="tabpanel" class="tab-content bg-base-100 border-base-300 rounded-box p-6">
 
-                <EasyDataTable :headers="headers" :items="items" />
+                <EasyDataTable :headers="CorrespondenceHeaders" :items="correspondenceInfo2" :search-value="searchValue"
+                    :filter-options="filterOptions">
 
+                    <template #header-filing_area.name="header">
+                        <div class="flex">
+                            {{ header.text }} <img src="../assets/funnel.svg" class="h-5 w-5 z-50"
+                                @click.stop="showFilingAreaFilter = !showFilingAreaFilter">
+
+                            <!-- <div class="" v-if="showFilingAreaFilter">
+                                <input v-model="filtersubjectArea" />
+                            </div> -->
+                            <div v-if="!showFilingAreaFilter">
+                                <select class="filing_area.name-selector border-2 border-gray-600"
+                                    v-model="filterfilingArea" name="filing_area.name">
+                                    <option value="all">All</option>
+                                    <option v-for="item in filing_areaInfo" :key="item.id" :value="item.name">
+
+                                        {{ item.name }}
+
+
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+                    </template>
+
+                    <template #header-subject="header">
+                        <div>
+                            <div class="flex">
+                                <img src="../assets/funnel.svg" class="h-5 w-5 z-50"
+                                    @click.stop="showsubjectFilter = !showsubjectFilter">
+                                {{ header.text }}
+                            </div>
+                            <input class="border-2 border-gray-600 mb-1" v-if="!showsubjectFilter"
+                                v-model="filtersubjectArea" />
+
+                        </div>
+
+                    </template>
+
+                    <template #header-dateReceived="header">
+                        <div>
+                            <div class="flex">
+                                <img src="../assets/funnel.svg" class="h-5 w-5 z-50"
+                                    @click.stop="showdateReceivedFilter = !showdateReceivedFilter">
+                                {{ header.text }}
+                            </div>
+
+                            <input class="border-2 border-gray-600 mb-1" v-if="!showdateReceivedFilter"
+                                v-model="filterdateReceived" />
+                        </div>
+
+
+                    </template>
+
+                    <template #header-correspondenceDate="header">
+                        <div>
+                            <div class="flex">
+                                <img src="../assets/funnel.svg" class="h-5 w-5 z-50"
+                                    @click.stop="showcorrespondenceDateFilter = !showcorrespondenceDateFilter">
+                                {{ header.text }}
+                            </div>
+                            <input class="border-2 border-gray-600 mb-1" v-if="!showcorrespondenceDateFilter"
+                                v-model="filtercorrespondenceDate" />
+
+                        </div>
+
+                    </template>
+
+
+                    <template #header-sentDate="header">
+                        <div>
+                            <div class="flex">
+                                <img src="../assets/funnel.svg" class="h-5 w-5 z-50"
+                                    @click.stop="showsentDateFilter = !showsentDateFilter">
+                                {{ header.text }}
+                            </div>
+                            <input class="border-2 border-gray-600" v-if="!showsentDateFilter"
+                                v-model="filtersentDate" />
+
+                        </div>
+
+                    </template>
+
+                    <template
+                        #item-navUrl="{ id, fileNumber, subject, receivedFrom, filing_area_id, correspondenceDate, dateReceived, sentDate, comments, flagged }">
+
+                        <div class="flex space-x-2 items-center">
+
+
+                            <svg v-if="flagged === 0" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                fill="#000000" viewBox="0 0 256 256" class="cursor-pointer"
+                                @click="updateCorrespondenceFlagged(id, fileNumber, subject, receivedFrom, filing_area_id, correspondenceDate, dateReceived, sentDate, comments, flagged)">
+                                <path
+                                    d="M42.76,50A8,8,0,0,0,40,56V224a8,8,0,0,0,16,0V179.77c26.79-21.16,49.87-9.75,76.45,3.41,16.4,8.11,34.06,16.85,53,16.85,13.93,0,28.54-4.75,43.82-18a8,8,0,0,0,2.76-6V56A8,8,0,0,0,218.76,50c-28,24.23-51.72,12.49-79.21-1.12C111.07,34.76,78.78,18.79,42.76,50ZM216,172.25c-26.79,21.16-49.87,9.74-76.45-3.41-25-12.35-52.81-26.13-83.55-8.4V59.79c26.79-21.16,49.87-9.75,76.45,3.4,25,12.35,52.82,26.13,83.55,8.4Z">
+                                </path>
+                            </svg>
+
+                            <svg v-else="flagged === 1" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                fill="#c83c3c" viewBox="0 0 256 256" class="cursor-pointer"
+                                @click="updateCorrespondenceUnflagged(id, fileNumber, subject, receivedFrom, filing_area_id, correspondenceDate, dateReceived, sentDate, comments, flagged)">
+                                <path
+                                    d="M232,56V176a8,8,0,0,1-2.76,6c-15.28,13.23-29.89,18-43.82,18-18.91,0-36.57-8.74-53-16.85C105.87,170,82.79,158.61,56,179.77V224a8,8,0,0,1-16,0V56a8,8,0,0,1,2.77-6h0c36-31.18,68.31-15.21,96.79-1.12C167,62.46,190.79,74.2,218.76,50A8,8,0,0,1,232,56Z">
+                                </path>
+                            </svg>
+
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#365BEC"
+                                viewBox="0 0 256 256" class="cursor-pointer"
+                                @click="setcurrentCorrespondence({ id, fileNumber, subject, receivedFrom, filing_area_id, correspondenceDate, dateReceived, sentDate, comments, flagged })">
+                                <path
+                                    d="M227.32,73.37,182.63,28.69a16,16,0,0,0-22.63,0L36.69,152A15.86,15.86,0,0,0,32,163.31V208a16,16,0,0,0,16,16H216a8,8,0,0,0,0-16H115.32l112-112A16,16,0,0,0,227.32,73.37ZM136,75.31,152.69,92,68,176.69,51.31,160ZM48,208V179.31L76.69,208Zm48-3.31L79.32,188,164,103.31,180.69,120Zm96-96L147.32,64l24-24L216,84.69Z">
+                                </path>
+                            </svg>
+
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#c83c3c"
+                                viewBox="0 0 256 256" class="cursor-pointer" @click="deleteCorrespondenceInfo(id)">
+                                <path
+                                    d="M216,48H176V40a24,24,0,0,0-24-24H104A24,24,0,0,0,80,40v8H40a8,8,0,0,0,0,16h8V208a16,16,0,0,0,16,16H192a16,16,0,0,0,16-16V64h8a8,8,0,0,0,0-16ZM96,40a8,8,0,0,1,8-8h48a8,8,0,0,1,8,8v8H96Zm96,168H64V64H192ZM112,104v64a8,8,0,0,1-16,0V104a8,8,0,0,1,16,0Zm48,0v64a8,8,0,0,1-16,0V104a8,8,0,0,1,16,0Z">
+                                </path>
+                            </svg>
+
+                        </div>
+                    </template>
+
+                </EasyDataTable>
+                
             </div>
 
             <!-- <input type="radio" name="my_tabs_2" role="tab" class="tab" aria-label="Tab 3" />
@@ -449,6 +574,30 @@ export default {
                 );
                 console.log(response);
                 this.correspondenceInfo = response.data.data
+
+            } catch (e) {
+
+                console.log(e)
+            }
+
+        },
+
+        // Get Correspondence Info Flagged
+        async getCorrespondenceInfoFlagged() {
+            const { user } = useAuthStore();
+            // console.log(user);
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${user.token}`,
+                },
+            };
+
+            try {
+                const response = await axios.get(
+                    `${import.meta.env.VITE_API_URL}/flagged`, config
+                );
+                console.log(response);
+                this.correspondenceInfo2 = response.data.data
 
             } catch (e) {
 
@@ -532,6 +681,7 @@ export default {
                 my_modal_1.close()
 
                 this.getCorrespondenceInfo()
+                this.getCorrespondenceInfoFlagged()
 
                 console.log(response)
 
@@ -579,6 +729,7 @@ export default {
 
 
                 this.getCorrespondenceInfo()
+                this.getCorrespondenceInfoFlagged()
                 // console.log(response)
 
             } catch (e) {
@@ -623,6 +774,7 @@ export default {
 
 
                 this.getCorrespondenceInfo()
+                this.getCorrespondenceInfoFlagged()
                 // console.log(response)
 
             } catch (e) {
@@ -650,6 +802,7 @@ export default {
                 my_modal_2.close()
 
                 this.getCorrespondenceInfo()
+                this.getCorrespondenceInfoFlagged()
                 // console.log(response)
 
             } catch (e) {
@@ -673,6 +826,7 @@ export default {
                     config
                 );
                 this.getCorrespondenceInfo()
+                this.getCorrespondenceInfoFlagged()
                 // console.log(response)
 
             } catch (e) {
@@ -683,6 +837,7 @@ export default {
     },
     created() {
         this.getCorrespondenceInfo()
+        this.getCorrespondenceInfoFlagged()
         this.getFilingAreaInfo()
     },
 
@@ -702,21 +857,10 @@ export default {
                 { text: "LAST UPDATED", value: "updated_at" },
                 { text: "OPTIONS", value: "navUrl", width: 50 },
             ],
-            CorrespondenceInfoData: [
-                {
-                    dateReceived: "25/07/2024", correspondenceDate: "25/07/2024", receivedFrom: "Ms. Vanessa Richards",
-                    subject: 'National Health Services Accreditation Authority of T&T', fileNumber: "National Health Services Accreditation Authority of T&T",
-                    comments: "directed by PM to Ms. Richards for action on July 12, 2024"
-                },
 
-                {
-                    dateReceived: "25/07/2024", correspondenceDate: "04/07/2024", receivedFrom: "Sec. to Cabinet",
-                    subject: 'Ms. Lisa Lashley, and Ms. Andrea Walcott ftp Aug. 3, 2023 to Aug. 2, 2024', fileNumber: "Forwarding Form",
-                    comments: ""
-                },
-            ],
 
             correspondenceInfo: [],
+            correspondenceInfo2: [],
             filing_areaInfo: [],
 
             currentCorrespondence: {},
@@ -752,32 +896,25 @@ export default {
 
 
 
-            headers: [
+            CorrespondenceHeadersFlagged: [
+                // { text: "ID", value: "id" },
                 { text: "DATE OF RECEIPT", value: "dateReceived" },
                 { text: "DATE OF LETTERS", value: "correspondenceDate" },
+                { text: "DATE SENT", value: "sentDate" },
+                { text: "FILING AREA", value: "filing_area.name" },
                 { text: "FROM WHOM RECEIVED", value: "receivedFrom" },
                 { text: "SUBJECT", value: "subject" },
                 { text: "FILE NUMBER", value: "fileNumber" },
                 { text: "REMARKS/COMMENTS", value: "comments" },
-                { text: "NAV", value: "nav", width: 50 },
-
+                { text: "LAST UPDATED", value: "updated_at" },
+                { text: "OPTIONS", value: "navUrl", width: 50 },
             ],
 
-            items: [
-                {
-                    dateReceived: "25/07/2024", correspondenceDate: "25/07/2024", receivedFrom: "Ms. Vanessa Richards",
-                    subject: 'National Health Services Accreditation Authority of T&T', fileNumber: "National Health Services Accreditation Authority of T&T",
-                    comments: "directed by PM to Ms. Richards for action on July 12, 2024", nav: ''
-                },
 
-                {
-                    dateReceived: "25/07/2024", correspondenceDate: "04/07/2024", receivedFrom: "Sec. to Cabinet",
-                    subject: 'Ms. Lisa Lashley, and Ms. Andrea Walcott ftp Aug. 3, 2023 to Aug. 2, 2024', fileNumber: "Forwarding Form",
-                    comments: "", nav: ''
-                },
-            ],
-
+          
         }
+
+
 
 
     },
@@ -860,36 +997,6 @@ export default {
 
     }
 }
-
-
-
-
-
-// const headers = [
-//     { text: "DATE OF RECEIPT", value: "dateReceived" },
-//     { text: "DATE OF LETTERS", value: "correspondenceDate" },
-//     { text: "FROM WHOM RECEIVED", value: "receivedFrom" },
-//     { text: "SUBJECT", value: "subject" },
-//     { text: "FILE NUMBER", value: "fileNumber" },
-//     { text: "REMARKS/COMMENTS", value: "comments" },
-//     { text: "NAV", value: "nav", width: 50 },
-
-// ];
-
-// const items = [
-//     {
-//         dateReceived: "25/07/2024", correspondenceDate: "25/07/2024", receivedFrom: "Ms. Vanessa Richards",
-//         subject: 'National Health Services Accreditation Authority of T&T', fileNumber: "National Health Services Accreditation Authority of T&T",
-//         comments: "directed by PM to Ms. Richards for action on July 12, 2024", nav: ''
-//     },
-
-//     {
-//         dateReceived: "25/07/2024", correspondenceDate: "04/07/2024", receivedFrom: "Sec. to Cabinet",
-//         subject: 'Ms. Lisa Lashley, and Ms. Andrea Walcott ftp Aug. 3, 2023 to Aug. 2, 2024', fileNumber: "Forwarding Form",
-//         comments: "", nav: ''
-//     },
-// ];
-
 
 
 </script>

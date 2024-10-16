@@ -3,6 +3,7 @@ import axios from "axios";
 // import { fetchWrapper } from '@/helpers';
 import { router } from '@/router';
 import { useAlertStore } from '@/stores';
+import { data } from 'autoprefixer';
 
 axios.defaults.withCredentials = true;
 axios.defaults.withXSRFToken = true;
@@ -17,14 +18,14 @@ export const useAuthStore = defineStore({
         returnUrl: null
     }),
     actions: {
-        async login(email, password, datasource) {
+        async login(email, password, database) {
             try {
                 // Get CSRF Cookie
                 await axios.get(`http://127.0.0.1:8000/sanctum/csrf-cookie`);
 
                 // Login...
                 const user = await axios.post(`${baseUrl}/login`, {
-                    email, password, datasource,
+                    email, password, database,
                 });
 
                 // update pinia state

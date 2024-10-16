@@ -6,13 +6,14 @@ import { useAuthStore } from '@/stores';
 
 const schema = Yup.object().shape({
     email: Yup.string().required('email is required'),
-    password: Yup.string().required('Password is required')
+    password: Yup.string().required('Password is required'),
+    database: Yup.string().required('Database is required')
 });
 
 async function onSubmit(values) {
     const authStore = useAuthStore();
-    const { email, password } = values;
-    await authStore.login(email, password);
+    const { email, password, database } = values;
+    await authStore.login(email, password, database);
 }
 </script>
 
@@ -66,15 +67,28 @@ async function onSubmit(values) {
                         <div class="invalid-feedback">{{ errors.password }}</div>
                     </label>
                 </div>
-                <div class="p-1 pb-2">
-                    <select name="datasource" class="select select-bordered w-full" >
+                <div class="p-1">
+                    <label class="input input-bordered flex items-center gap-2">
+                        
+                        <Field name="database" type="text" class="grow" placeholder="OPM/Whithall/TICBuilding"
+                            :class="{ 'is-invalid': errors.database }" />
+
+
+                        <div class="invalid-feedback">{{ errors.database }}</div>
+                    </label>
+                </div>
+
+
+
+                <!-- <div class="p-1 pb-2">
+                    <select name="database" type="text" class="select select-bordered w-full" >
                         
                         <option disabled selected>Please select Uint</option>
                         <option value="opm">OPM</option>
                         <option  value="whithall">Whitehall</option>
                         <option  value="tic_building">TIC Building</option>
                     </select>
-                </div>
+                </div> -->
 
                 <div class="form-group">
                     <button class="btn btn-primary" :disabled="isSubmitting">

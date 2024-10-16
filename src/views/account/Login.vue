@@ -69,24 +69,28 @@ async function onSubmit(values) {
                 </div>
                 <div class="p-1">
                     <label class="input input-bordered flex items-center gap-2">
-                        
-                        <Field name="database" type="text" class="grow" placeholder="OPM/Whithall/TICBuilding"
-                            :class="{ 'is-invalid': errors.database }" />
+
+                        <Field name="database" as="select" class="grow"
+                            :class="{ 'is-invalid': errors.database }">
+                            <option value="">Please select Database</option>
+                            <option value="opm">OPM</option>
+                            <option value="whithall">Whitehall</option>
+                            <option value="ticbuilding">TIC Building</option>
+                        </Field>
+
+
 
 
                         <div class="invalid-feedback">{{ errors.database }}</div>
                     </label>
                 </div>
-
-
-
                 <!-- <div class="p-1 pb-2">
-                    <select name="database" type="text" class="select select-bordered w-full" >
-                        
+                    <select name="database" class="select select-bordered w-full">
+
                         <option disabled selected>Please select Uint</option>
                         <option value="opm">OPM</option>
-                        <option  value="whithall">Whitehall</option>
-                        <option  value="tic_building">TIC Building</option>
+                        <option value="whithall">Whitehall</option>
+                        <option value="ticbuilding">TIC Building</option>
                     </select>
                 </div> -->
 

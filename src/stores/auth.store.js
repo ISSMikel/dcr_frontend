@@ -28,6 +28,8 @@ export const useAuthStore = defineStore({
                     email, password, database,
                 });
 
+                console.log(user)
+
                 // update pinia state
                 this.user = user.data;
                 // console.log(user.data.token);

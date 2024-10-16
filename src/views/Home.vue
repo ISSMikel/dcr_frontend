@@ -110,7 +110,7 @@
                                 class=" btn bg-red-500 hover:bg-red-600 transition-all duration-200  text-white rounded-lg p-2"
                                 onclick="my_modal_1.close()">Close</button>
 
-                            <button type="button"
+                            <button type="submit"
                                 class="btn bg-blue-500 hover:bg-blue-600 transition-all duration-200  text-white rounded-lg p-2"
                                 @click="createCorrespondenceInfo()">
                                 Submit
